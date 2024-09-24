@@ -1,7 +1,7 @@
 export const FixedAsciiString = (maxLength) => {
 	return {
 		get byteLength() {
-			return 1;
+			return maxLength;
 		},
 
 		init(buffer, offset) {
