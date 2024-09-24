@@ -1,9 +1,22 @@
-import {FixedAsciiString} from "./fixed-ascii-string";
+import {FixedAsciiString} from "./fixed-ascii-string.js";
+import {Struct} from "./struct.js";
+import {U8} from "./u8.js";
+import {U16} from "./u16.js";
 
-const a = new Uint8Array([10,20,30,40]);
-const fixed = FixedAsciiString(10).init(a.buffer, 0);
-fixed.set("hhhh");
-console.log(fixed.get())
+// const a = new Uint8Array([10,20,30,40]);
+// const fixed = FixedAsciiString(10).init(a.buffer, 0);
+// fixed.set("hhhh");
+// console.log(fixed.get());
+
+const Person = new Struct({
+	age: U8,
+	id: U16,
+	firstName: FixedAsciiString(8),
+	secondName: FixedAsciiString(8),
+});
+
+console.log(Person)
+
 // console.log(buf.buffer);
 // console.log(n.get());
 
