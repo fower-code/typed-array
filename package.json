@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "packageManager": "yarn@4.5.0",
+   "type": "module",
+   "packageManager": "yarn@4.5.0",
   "scripts": {
     "dev": "nodemon src/index.js",
     "serve": "TS_NODE_PROJECT=\"tsconfig.node.json\" rspack serve"
