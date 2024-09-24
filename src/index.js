@@ -1,15 +1,9 @@
-import {U8} from "./u8";
+import {FixedAsciiString} from "./fixed-ascii-string";
 
 const a = new Uint8Array([10,20,30,40]);
-const view = new DataView(a.buffer);
-// a[0] = 11;
-// console.log(view.getInt8(0,));
-view.setUint8(0, 200, );
-console.log(a.buffer)
-console.log([...a]);
-// const n = U8.init(a.buffer, 0);
-// n.set(1);
-
+const fixed = FixedAsciiString(10).init(a.buffer, 0);
+fixed.set("hhhh");
+console.log(fixed.get())
 // console.log(buf.buffer);
 // console.log(n.get());
 
