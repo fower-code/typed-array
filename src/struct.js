@@ -1,12 +1,12 @@
 export class Struct {
 	scheme;
+	byteLength;
 
 	constructor(scheme) {
 		let totalLength = 0;
 
 		this.scheme = new Map(
 			Object.entries(scheme).flatMap(([key, type]) => {
-				// console.log(key)
 				const alignment = this.#getAlignment(totalLength, type.alignment ?? 1);
 
 				const res = [];
@@ -20,7 +20,8 @@ export class Struct {
 							init: () => {
 								return {
 									get: () => 0,
-									set: (_) => {}
+									set: (_) => {
+									}
 								}
 							}
 						}
@@ -31,6 +32,7 @@ export class Struct {
 
 				res.push([
 					key,
+
 					{
 						byteLength: type.byteLength,
 						init: () => type.init.bind(this)
@@ -42,6 +44,8 @@ export class Struct {
 				return res;
 			})
 		);
+
+		this.byteLength = totalLength;
 	}
 
 	#getAlignment(offset, size) {
