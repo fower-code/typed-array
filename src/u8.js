@@ -4,13 +4,16 @@ export const U8 = {
 	},
 
 	init(buffer, offset) {
+		const
+			arr = new Uint8Array(buffer, offset, 1);
+
 		return {
 			get() {
-				return new Uint8Array(buffer, offset, 1)[0];
+				return arr[0];
 			},
 
 			set(val) {
-				new Uint8Array(buffer, offset, 1)[0] = val;
+				arr[0] = val;
 			}
 		}
 	}
