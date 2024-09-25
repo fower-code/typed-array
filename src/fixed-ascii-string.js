@@ -13,7 +13,6 @@ export const FixedAsciiString = (maxLength) => {
 					let str = "";
 
 					for (const chardCode of arr) {
-						console.log(chardCode);
 						if (chardCode === 0) {
 							break;
 						}
