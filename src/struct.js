@@ -50,11 +50,58 @@ export class Struct {
 
 	create(
 		data,
-		buf = new ArrayBuffer(this.byteLength),
+		buffer = new ArrayBuffer(this.byteLength),
 		offset = 0
 	) {
 		const
-			view = new StructView(buf, this.byteLength, offset);
+			view = new StructView(buffer, this.byteLength, offset);
+	}
+
+
+	from(buffer, offset = 0) {
+		const view = new StructView(buffer, this.byteLength, offset);
+
+		this.scheme.forEach((type, key) => {
+			const currentOffset = offset;
+			offset += type.byteLength;
+
+			let accessors;
+
+			if (typeof key !== 'symbol') {
+				Object.defineProperty(view, key, {
+					enumerable: true,
+					configurable: true,
+
+					get: () => init().get(),
+
+					set: (value) => {
+						init().set(value);
+					},
+				})
+			}
+
+			function init() {
+				if (accessors == null) {
+					accessors = type.init(buffer, currentOffset);
+				}
+
+				return accessors
+			}
+		});
+
+		return view;
+	}
+
+	init(buffer, offset) {
+		let view = this.from(buffer, offset);
+
+		return {
+			get: () => view,
+
+			set: (data) => {
+				view = this.create(data, buffer, offset);
+			}
+		};
 	}
 
 	#getAlignment(offset, size) {
@@ -69,12 +116,12 @@ export class Struct {
 }
 
 class StructView {
-	#buf;
+	#buffer;
 	#byteLength;
 	#byteOffset;
 
-	get buf() {
-		return this.#buf;
+	get buffer() {
+		return this.#buffer;
 	}
 
 	get byteLength() {
@@ -85,8 +132,8 @@ class StructView {
 		return this.#byteOffset;
 	}
 
-	constructor(buf, byteLength, offset) {
-		this.#buf = buf;
+	constructor(buffer, byteLength, offset) {
+		this.#buffer = buffer;
       this.#byteLength = byteLength;
       this.#byteOffset = offset;
 	}
