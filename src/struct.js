@@ -48,6 +48,15 @@ export class Struct {
 		this.byteLength = totalLength;
 	}
 
+	create(
+		data,
+		buf = new ArrayBuffer(this.byteLength),
+		offset = 0
+	) {
+		const
+			view = new StructView(buf, this.byteLength, offset);
+	}
+
 	#getAlignment(offset, size) {
 		const remainder = offset % size;
 
@@ -56,5 +65,29 @@ export class Struct {
 		}
 
 		return size - remainder;
+	}
+}
+
+class StructView {
+	#buf;
+	#byteLength;
+	#byteOffset;
+
+	get buf() {
+		return this.#buf;
+	}
+
+	get byteLength() {
+		return this.#byteLength;
+	}
+
+	get byteOffset() {
+		return this.#byteOffset;
+	}
+
+	constructor(buf, byteLength, offset) {
+		this.#buf = buf;
+      this.#byteLength = byteLength;
+      this.#byteOffset = offset;
 	}
 }
