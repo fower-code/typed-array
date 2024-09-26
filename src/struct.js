@@ -55,6 +55,25 @@ export class Struct {
 	) {
 		const
 			view = new StructView(buffer, this.byteLength, offset);
+
+		this.scheme.forEach((type, key) => {
+			const {get, set} = type.init(buffer, offset);
+
+			offset += type.byteLength;
+
+			if (typeof key !== 'symbol') {
+				set(data[key]);
+
+				Object.defineProperty(view, key, {
+					enumerable: true,
+					configurable: true,
+					get,
+					set,
+				})
+			}
+		});
+
+		return view;
 	}
 
 
