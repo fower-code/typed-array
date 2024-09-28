@@ -9,7 +9,7 @@ export const U16 = {
 
    init(buffer, offset) {
 		const
-			arr = new Uint16Array(buffer, offset, 1)[0];
+			arr = new Uint16Array(buffer, offset, 1);
 
       return {
          get() {
