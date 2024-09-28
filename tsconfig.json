@@ -17,15 +17,7 @@
       "noEmit": true,
       "declaration": true,
       "declarationDir": "build",
-      "rootDir": ".",
-      "paths": {
-         "~core/*": [
-            "./src/core/*"
-         ],
-         "~assets/*": [
-            "./assets/*"
-         ]
-      }
+      "rootDir": "."
    },
    "include": [
       "src/**/*",

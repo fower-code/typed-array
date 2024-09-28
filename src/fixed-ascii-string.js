@@ -1,7 +1,7 @@
 export const FixedAsciiString = (maxLength) => {
 	return {
 		get byteLength() {
-			return 1;
+			return maxLength;
 		},
 
 		init(buffer, offset) {
@@ -13,7 +13,6 @@ export const FixedAsciiString = (maxLength) => {
 					let str = "";
 
 					for (const chardCode of arr) {
-						console.log(chardCode);
 						if (chardCode === 0) {
 							break;
 						}
