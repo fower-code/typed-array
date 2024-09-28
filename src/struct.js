@@ -35,7 +35,7 @@ export class Struct {
 
 					{
 						byteLength: type.byteLength,
-						init: () => type.init.bind(this)
+						init: type.init.bind(type)
 					}
 				]);
 
@@ -57,8 +57,9 @@ export class Struct {
 			view = new StructView(buffer, this.byteLength, offset);
 
 		this.scheme.forEach((type, key) => {
+			// console.log(type, key)
+			// console.log(data[key])
 			const {get, set} = type.init(buffer, offset);
-
 			offset += type.byteLength;
 
 			if (typeof key !== 'symbol') {
